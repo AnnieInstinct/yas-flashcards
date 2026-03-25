@@ -69,7 +69,7 @@ input:checked+.slider:before{transform:translateX(16px)}
 .cc-highlight{color:#8a6e00}
 
 /* ── CARD ── */
-#card-wrap{perspective:1200px;width:min(680px,calc(100vw - 48px));height:min(420px,calc(100vh - 330px));min-height:280px;cursor:pointer;}
+#card-wrap{perspective:1200px;-webkit-perspective:1200px;width:min(680px,calc(100vw - 48px));height:min(420px,calc(100vh - 330px));min-height:280px;cursor:pointer;}
 #card{width:100%;height:100%;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1);-webkit-transition:-webkit-transform .5s cubic-bezier(.4,.2,.2,1);position:relative;}
 #card.flipped{transform:rotateY(180deg);-webkit-transform:rotateY(180deg)}
 .card-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#fff;border-radius:16px;box-shadow:0 2px 20px rgba(0,0,0,.08),0 0 0 1px rgba(0,0,0,.04);display:flex;flex-direction:column;padding:24px 28px 20px;border-top:4px solid #8a6e00;}
@@ -590,7 +590,15 @@ function updateStats(){
 function flipCard(){
   state.isFlipped=!state.isFlipped;
   const c=document.getElementById('card');
-  if(state.isFlipped) c.classList.add('flipped'); else c.classList.remove('flipped');
+  if(state.isFlipped){
+    c.classList.add('flipped');
+    c.style.transform='rotateY(180deg)';
+    c.style.webkitTransform='rotateY(180deg)';
+  } else {
+    c.classList.remove('flipped');
+    c.style.transform='rotateY(0deg)';
+    c.style.webkitTransform='rotateY(0deg)';
+  }
 }
 function navigate(dir){
   const p=state.currentPos+dir; if(p<0||p>=state.deck.length) return;
